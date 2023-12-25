@@ -24,7 +24,23 @@ background = (116, 237, 194)
 CREATE_BLOCK_EVENT = pg.USEREVENT + 1
 pg.time.set_timer(CREATE_BLOCK_EVENT, 600)
 
-FONT = pg.font.SysFont('Arial', 28)
+FONT = pg.font.SysFont('Comic Sans', 28)
+
+
+def deleting_blocks(screen):
+    global level, stack_1, stack_2, stack_3, stack_4
+    for i in range(len(level)):
+        for j in range(len(level[i])):
+            block = level[i][j]
+            if block.y >= 626:
+                if i == 0:
+                    stack_1.remove(block)
+                elif i == 1:
+                    stack_2.remove(block)
+                elif i == 2:
+                    stack_3.remove(block)
+                elif i == 3:
+                    stack_4.remove(block)
 
 
 def moving_blocks(screen):
@@ -44,7 +60,7 @@ def moving_blocks(screen):
                 level = [stack_1, stack_2, stack_3, stack_4]
             else:
                 pg.draw.rect(screen, (81, 166, 136), block)
-                level[i][j] = block.move(0, 6)
+                level[i][j] = block.move(0, 2)
 
 
 score = 0
@@ -81,6 +97,10 @@ while running:
     moving_blocks(screen)
 
     for event in pg.event.get():
+        distance1 = 1000
+        distance2 = 1000
+        distance3 = 1000
+        distance4 = 1000
         if event.type == pg.QUIT:
             running = False
         elif event.type == CREATE_BLOCK_EVENT:
@@ -104,19 +124,30 @@ while running:
                 running = False
             elif event.key in [pg.K_w, pg.K_a, pg.K_s, pg.K_d]:
                 if pg.K_w and stack_1:
-                    distance = 648 - stack_1[-1].y
-                elif pg.K_a and stack_2:
-                    distance = 648 - stack_2[-1].y
-                elif pg.K_s and stack_3:
-                    distance = 648 - stack_3[-1].y
-                elif pg.K_d and stack_4:
-                    distance = 648 - stack_4[-1].y
-                print(distance)
+                    distance1 = 648 - stack_1[-1].y
+                if pg.K_a and stack_2:
+                    distance2 = 648 - stack_2[-1].y
+                if pg.K_s and stack_3:
+                    distance3 = 648 - stack_3[-1].y
+                if pg.K_d and stack_4:
+                    distance4 = 648 - stack_4[-1].y
                 level = [stack_1, stack_2, stack_3, stack_4]
-
-                if distance <= 80:
+                print((distance1, distance2, distance3, distance4))
+                if distance1 <= 80:
                     score += 10
-                elif 80 < distance < 150:
+                elif 80 < distance1 < 150:
+                    score += 5
+                elif distance2 <= 80:
+                    score += 10
+                elif 80 < distance2 < 150:
+                    score += 5
+                elif distance3 <= 80:
+                    score += 10
+                elif 80 < distance3 < 150:
+                    score += 5
+                elif distance4 <= 80:
+                    score += 10
+                elif 80 < distance4 < 150:
                     score += 5
 
     pg.display.update()
