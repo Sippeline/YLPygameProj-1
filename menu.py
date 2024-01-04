@@ -3,10 +3,8 @@ import sys
 from button import Button
 
 pygame.init()
-
 SCREEN = pygame.display.set_mode((1400, 700))
 pygame.display.set_caption("Menu")
-
 BG = pygame.image.load("assets/Background.jpeg")
 BG = pygame.transform.scale(BG, (1400, 700))
 
