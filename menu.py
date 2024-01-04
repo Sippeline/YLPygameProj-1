@@ -43,7 +43,6 @@ def play():
 def options():
     while True:
         OPTIONS_MOUSE_POS = pygame.mouse.get_pos()
-
         SCREEN.fill("white")
 
         OPTIONS_TEXT = get_font(45).render("This is the OPTIONS screen.", True, "Black")
